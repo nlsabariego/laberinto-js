@@ -1,2 +1,61 @@
-@import "core/settings";
 @import "core/reset";
+@import "core/variables";
+
+
+.body {
+    background-color: $background-page;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__title{
+        font-family: $font-title;
+        text-transform: uppercase;
+        font-size: 60px;
+        color: $color-title;
+    }
+
+    &__text{
+        font-family: $font-text;
+        font-size: 20px;
+        font-weight: bold;
+        color: $color-text;
+    }
+}
+
+.main{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    &__canvas{
+        border: solid 4px black;
+        margin: 50px;
+    }
+
+    &__message{
+        margin-top: 50px;
+    
+    }
+
+
+    &__title{
+        font-family: $font-title;
+        text-transform: uppercase;
+        font-size: 30px;
+        color: $color-title;
+
+    }
+
+    &__text{
+        font-family: $font-text;
+        font-size: 20px;
+        font-weight: bold;
+        color: $color-text;
+
+    }    
+}
