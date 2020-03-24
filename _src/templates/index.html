@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Juego Laberinto</title>
     <link rel="stylesheet" href="./assets/css/main.css" />
-    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Spicy+Rice&display=swap" rel="stylesheet">  </head>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Spicy+Rice&display=swap" rel="stylesheet">  
+  </head>
 
-  <body class="body">
+  <body class="body" onload="initialize()">
     <header class="header">
       <h1 class="header__title">laberinto</h1>
       <p class="header__text">Haz que el perro recoja el hueso y llegue a su casa escapando de los guardias</p>
     </header>
-    <main class="main">
+    <main class="main" >
       <canvas id="canvas" width="1000" height="600" class="main__canvas"></canvas>
       <div class="main__message">
         <h3 class="main__title">mensajes:</h3>
