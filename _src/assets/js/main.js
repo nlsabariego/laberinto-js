@@ -13,15 +13,17 @@ let imgDog;
 
 const grass = '#166b2d';//COLORES LABERINTO
 const way ='#d46b15';
+const bones = '#753f0d';
+const myHome = '#b1ff4a';
 
 const maze = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 0],
+    [0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 3, 0],
     [0, 2, 0, 2, 2, 2, 0, 2, 0, 0, 2, 0, 0, 0, 2, 0, 2, 0, 2, 0],
     [0, 2, 0, 2, 0, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 0, 2, 0],
     [0, 2, 2, 2, 0, 2, 2, 2, 0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 2, 0],
     [0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 2, 2, 2, 0, 0, 0],
-    [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 0],
+    [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 0, 1, 0],
     [0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
     [0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0],
     [0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 0, 2, 2, 2, 0, 2, 0, 2, 0, 0],
@@ -53,29 +55,50 @@ const Bone = function (x, y) {
 };
 
 //PLANTILLA PROTAGONISTA
-const Protagonist = function (x, y){
-    this.x = x;
-    this.y = y;
+const Protagonist = function (){
+    this.x = 1;
+    this.y = 1;
     this.speed = 50;
     //MÉTODOS
     this.draw = function () {
-        ctx.drawImage(imgDog, this.x, this.y);
+        ctx.drawImage(imgDog, this.x*anchoF, this.y*altoF);
+    };
+
+    this.margins = function (x, y){
+        let collision = false;
+
+        if (maze[y][x] === 0 ){
+            collision = true;
+        }
+        return(collision);
     };
 
     this.up = function(){
-        this.y -= this.speed;
+        if (this.margins(this.x, this.y-1) === false){
+            this.y --;
+
+        }
     };
 
     this.down = function(){
-        this.y += this.speed;
+        if (this.margins(this.x, this.y+1) === false){
+            this.y ++;
+
+        }
     };
 
     this.left = function(){
-        this.x -= this.speed;
+        if (this.margins(this.x-1, this.y) === false){
+            this.x --;
+
+        }
     };
 
     this.right = function(){
-        this.x += this.speed;
+        if (this.margins(this.x+1, this.y) === false){
+            this.x ++;
+
+        }
     };
 
 };
@@ -90,6 +113,12 @@ function drawMaze() {
             }
             if(maze[y][x] === 2){
                 color = way;
+            }
+            if(maze[y][x] === 3 ){
+                color = myHome;
+            }
+            if(maze[y][x] === 1 ){
+                color = bones;
             }
             ctx.fillStyle = color;
             ctx.fillRect(x*anchoF, y*altoF, anchoF, altoF);
