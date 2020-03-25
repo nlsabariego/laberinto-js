@@ -3,6 +3,8 @@
 let canvas;
 let ctx;
 const FPS = 50;
+const text = document.querySelector('.main__text');
+
 
 const anchoF = 50;
 const altoF = 50;
@@ -59,7 +61,6 @@ const Bone = function (x, y) {
 const Protagonist = function (){
     this.x = 1;
     this.y = 1;
-    this.color = 'd46b15';
     this.bone = false;
 
     //MÉTODOS
@@ -112,27 +113,32 @@ const Protagonist = function (){
         this.bone = false;
         maze[6][18] = 3;
 
+
     };
 
     this.logicObjects = function(){
         let object = maze[this.y][this.x];
+
 
         //obtine hueso
         if (object === 3){
             this.bone = true;
             maze[this.y][this.x] = 4;
             console.log('tienes el hueso');
-
+            text.innerHTML = '¡Ya tienes el hueso! ¡Corre a casa!';
         }
 
         //llegamos a casa
         if (object === 1){
             if(this.bone === true){
+                text.innerHTML = '¡HAS GANADO!🎉';
                 this.win();
+
             }
             else{
                 console.log('no tienes hueso');
-                
+                text.innerHTML = 'Aún no tienes el hueso, ¡búscalo!';
+
             }
         }
     };
@@ -173,7 +179,7 @@ const prize = new Bone(900,300);
 function initialize() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d'); //siempre va a ser asi para imagen 2D
-    
+
     //Cargamos imágenes
     imgHouse = new Image();
     imgHouse.src = '../assets/images/house.png';
@@ -181,8 +187,9 @@ function initialize() {
     imgBone.src = '../assets/images/bone.png';
     imgDog = new Image();
     imgDog.src = '../assets/images/dog.png';
-    
 
+    console.log(text);
+    
 
     //FUNCION PARA MOVER AL PERRETE CON LAS FLECHAS DEL TECLADO
 
