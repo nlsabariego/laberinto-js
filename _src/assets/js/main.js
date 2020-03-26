@@ -279,13 +279,13 @@ function initialize() {
 
     //Cargamos imágenes
     imgHouse = new Image();
-    imgHouse.src = '../assets/images/house.png';
+    imgHouse.src = './assets/images/house.png';
     imgBone = new Image();
-    imgBone.src = '../assets/images/bone.png';
+    imgBone.src = './assets/images/bone.png';
     imgDog = new Image();
-    imgDog.src = '../assets/images/dog.png';
+    imgDog.src = './assets/images/dog.png';
     imgPolice = new Image();
-    imgPolice.src = '../assets/images/police.png';
+    imgPolice.src = './assets/images/police.png';
 
     //Creamos policias y los metemos al array 'enemy'
     enemy.push(new Police(9,5));
