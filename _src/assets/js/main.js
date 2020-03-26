@@ -65,8 +65,78 @@ const Police = function (x, y){
     this.x = x;
     this.y =y;
 
+    this.direction = Math.floor(Math.random()*4);
+
+    this.delay = 50;
+    this.fp = 0;
+    this.acc = 0;
+
     this.draw = function () {
         ctx.drawImage(imgPolice, this.x*anchoF, this.y*altoF);
+    };
+
+    this.margins = function (x, y){
+        let collision = false;
+
+        if (maze[y][x] === 0 ){
+            collision = true;
+        }
+        return(collision);
+    };
+
+    this.move = function (){
+        dog.crashEnemy(this.x, this.y);
+
+        if(this.acc < this.delay){
+            this.acc++;
+        }
+        else{
+            this.acc =0;
+    
+
+            //arriba
+            if(this.direction === 0){
+                if(this.margins(this.x, this.y-1) === false){
+                    this.y--;
+                }
+                else{
+                    this.direction = Math.floor(Math.random()*4);
+                }
+            }
+
+            //abajo
+            if(this.direction === 1){
+                if(this.margins(this.x, this.y+1) === false){
+                    this.y++;
+                }
+                else{
+                    this.direction = Math.floor(Math.random()*4);
+                }
+            }
+
+            //izquierda
+            if(this.direction === 2){
+                if(this.margins(this.x-1, this.y) === false){
+                    this.x--;
+                }
+                else{
+                    this.direction = Math.floor(Math.random()*4);
+                }
+            }
+
+            //derecha
+            if(this.direction === 3){
+                if(this.margins(this.x+1, this.y) === false){
+                    this.x++;
+                }
+                else{
+                    this.direction = Math.floor(Math.random()*4);
+                }
+            }
+        }
+
+
+
     };
 };
 
@@ -79,6 +149,12 @@ const Protagonist = function (){
     //MÉTODOS
     this.draw = function () {
         ctx.drawImage(imgDog, this.x*anchoF, this.y*altoF);
+    };
+
+    this.crashEnemy = function (x,y){
+        if(this.x === x && this.y === y){
+            this.dead();
+        }
     };
 
     this.margins = function (x, y){
@@ -127,6 +203,16 @@ const Protagonist = function (){
         this.bone = false;
         maze[6][18] = 3;
 
+    };
+
+    this.dead = function (){
+        text.innerHTML = '¡Te han pillado! Vuelve a intentarlo🐶';
+
+        this.x = 1;
+        this.y = 1;
+
+        this.bone = false;
+        maze[6][18] = 3;
     };
 
     this.logicObjects = function(){
@@ -188,16 +274,12 @@ let dog = new Protagonist();
 //Creamos objetos
 const home = new House(18,1);
 const prize = new Bone(18,6);
-//Creamos policias y los metemos al array 'enemy'
-enemy.push(new Police(9,5));
-enemy.push(new Police(1,8));
-enemy.push(new Police(10,1));
 
 
 function initialize() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d'); //siempre va a ser asi para imagen 2D
-
+    
     //Cargamos imágenes
     imgHouse = new Image();
     imgHouse.src = '../assets/images/house.png';
@@ -207,7 +289,11 @@ function initialize() {
     imgDog.src = '../assets/images/dog.png';
     imgPolice = new Image();
     imgPolice.src = '../assets/images/police.png';
-
+    
+    //Creamos policias y los metemos al array 'enemy'
+    enemy.push(new Police(9,5));
+    enemy.push(new Police(1,8));
+    enemy.push(new Police(10,1));
     //FUNCION PARA MOVER AL PERRETE CON LAS FLECHAS DEL TECLADO
 
     document.addEventListener('keydown', function (tecla){
@@ -253,6 +339,7 @@ function master() {
     prize.draw();
     dog.draw();
     for (let i = 0; i < enemy.length; i++) {
+        enemy[i].move();
         enemy[i].draw();
     }
 }
