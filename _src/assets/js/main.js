@@ -12,6 +12,9 @@ const altoF = 50;
 let imgHouse;
 let imgBone;
 let imgDog;
+let imgPolice;
+
+let enemy = [];
 
 const grass = '#166b2d';//COLORES LABERINTO
 const way ='#d46b15';
@@ -42,7 +45,7 @@ const House = function (x, y) {
     this.y = y;
     //MÉTODOS
     this.draw = function (){
-        ctx.drawImage(imgHouse, this.x, this.y);
+        ctx.drawImage(imgHouse, this.x*anchoF, this.y*altoF);
     };
 };
 
@@ -53,7 +56,17 @@ const Bone = function (x, y) {
     this.y = y;
     //MÉTODOS
     this.draw = function (){
-        ctx.drawImage(imgBone, this.x, this.y);
+        ctx.drawImage(imgBone, this.x*anchoF, this.y*altoF);
+    };
+};
+
+//PLANTILLA POLICIA
+const Police = function (x, y){
+    this.x = x;
+    this.y =y;
+
+    this.draw = function () {
+        ctx.drawImage(imgPolice, this.x*anchoF, this.y*altoF);
     };
 };
 
@@ -106,13 +119,13 @@ const Protagonist = function (){
     };
 
     this.win = function(){
-        console.log('ganaste');
         this.x = 1;
         this.y = 1;
 
+        text.innerHTML = '¡HAS GANADO!🎉';
+
         this.bone = false;
         maze[6][18] = 3;
-
 
     };
 
@@ -131,7 +144,6 @@ const Protagonist = function (){
         //llegamos a casa
         if (object === 1){
             if(this.bone === true){
-                text.innerHTML = '¡HAS GANADO!🎉';
                 this.win();
 
             }
@@ -173,8 +185,14 @@ function drawMaze() {
 
 //Creamos perrete
 let dog = new Protagonist();
-const home = new House(900,50);
-const prize = new Bone(900,300);
+//Creamos objetos
+const home = new House(18,1);
+const prize = new Bone(18,6);
+//Creamos policias y los metemos al array 'enemy'
+enemy.push(new Police(9,5));
+enemy.push(new Police(1,8));
+enemy.push(new Police(10,1));
+
 
 function initialize() {
     canvas = document.getElementById('canvas');
@@ -187,9 +205,8 @@ function initialize() {
     imgBone.src = '../assets/images/bone.png';
     imgDog = new Image();
     imgDog.src = '../assets/images/dog.png';
-
-    console.log(text);
-    
+    imgPolice = new Image();
+    imgPolice.src = '../assets/images/police.png';
 
     //FUNCION PARA MOVER AL PERRETE CON LAS FLECHAS DEL TECLADO
 
@@ -235,5 +252,8 @@ function master() {
     home.draw();
     prize.draw();
     dog.draw();
+    for (let i = 0; i < enemy.length; i++) {
+        enemy[i].draw();
+    }
 }
 
