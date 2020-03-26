@@ -92,7 +92,6 @@ const Police = function (x, y){
         }
         else{
             this.acc =0;
-    
 
             //arriba
             if(this.direction === 0){
@@ -223,7 +222,6 @@ const Protagonist = function (){
         if (object === 3){
             this.bone = true;
             maze[this.y][this.x] = 4;
-            console.log('tienes el hueso');
             text.innerHTML = '¡Ya tienes el hueso! ¡Corre a casa!';
         }
 
@@ -234,7 +232,6 @@ const Protagonist = function (){
 
             }
             else{
-                console.log('no tienes hueso');
                 text.innerHTML = 'Aún no tienes el hueso, ¡búscalo!';
 
             }
@@ -279,7 +276,7 @@ const prize = new Bone(18,6);
 function initialize() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d'); //siempre va a ser asi para imagen 2D
-    
+
     //Cargamos imágenes
     imgHouse = new Image();
     imgHouse.src = '../assets/images/house.png';
@@ -289,7 +286,7 @@ function initialize() {
     imgDog.src = '../assets/images/dog.png';
     imgPolice = new Image();
     imgPolice.src = '../assets/images/police.png';
-    
+
     //Creamos policias y los metemos al array 'enemy'
     enemy.push(new Police(9,5));
     enemy.push(new Police(1,8));
